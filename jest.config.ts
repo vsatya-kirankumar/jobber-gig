@@ -22,7 +22,7 @@ const config: Config.InitialOptions = {
   },
   coverageReporters: ['text-summary', 'lcov'],
   moduleNameMapper: {
-    '@gigss/(.*)': ['<rootDir>/src/$1']
+    '@gigs/(.*)': ['<rootDir>/src/$1']
   }
 };
 
