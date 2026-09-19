@@ -1,5 +1,5 @@
 import { Client } from '@elastic/elasticsearch';
-import { ClusterHealthResponse, GetResponse } from '@elastic/elasticsearch/lib/api/types';
+import { ClusterHealthResponse, CountResponse, GetResponse } from '@elastic/elasticsearch/lib/api/types';
 import { config } from '@gigs/config';
 import { ISellerGig, winstonLogger } from '@vsatya-kirankumar/jobber-shared';
 import { Logger } from 'winston';
@@ -53,6 +53,16 @@ const getIndexedData = async (index: string, itemId: string): Promise<ISellerGig
   }
 };
 
+const getDocumentCount = async (index: string): Promise<number> => {
+  try {
+    const result: CountResponse = await elasticSearchClient.count({ index });
+    return result.count;
+  } catch (error) {
+    log.log('error', 'GigService elasticsearch getDocumentCount() method error:', error);
+    return 0;
+  }
+};
+
 const addDataToIndex = async (index: string, itemId: string, gigDocument: unknown): Promise<void> => {
   try {
     await elasticSearchClient.index({
@@ -93,6 +103,7 @@ export {
   checkElasticSearchConnection,
   createIndex,
   getIndexedData,
+  getDocumentCount,
   addDataToIndex,
   updateIndexedData,
   deleteIndexedData

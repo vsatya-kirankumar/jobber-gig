@@ -1,1 +1,1 @@
-export { healthRoutes } from '@gigs/routes/health';
+export { healthRoutes } from 'src/routes/health.routes';

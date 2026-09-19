@@ -1,8 +1,8 @@
 import { config } from '@gigs/config';
 import { createRabbitMQConnection } from '@gigs/queues/connection';
+import { seedData, updateGigReview } from '@gigs/services/gig.service';
 import { winstonLogger } from '@vsatya-kirankumar/jobber-shared';
 import { Channel, ConsumeMessage, Replies } from 'amqplib';
-import { updateGigReview } from 'src/services/gig.service';
 import { Logger } from 'winston';
 
 const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'gigServiceConsumer', 'debug');
@@ -49,8 +49,8 @@ const consumeSeedDirectMessages = async (channel: Channel): Promise<void> => {
     const jobberQueue: Replies.AssertQueue = await channel.assertQueue(queueName, { durable: true, autoDelete: false });
     await channel.bindQueue(jobberQueue.queue, exchangeName, routingKey);
     channel.consume(jobberQueue.queue, async (msg: ConsumeMessage | null) => {
-      //const { sellers, count } = JSON.parse(msg!.content.toString());
-      //await seedData(sellers, count);
+      const { sellers, count } = JSON.parse(msg!.content.toString());
+      await seedData(sellers, count);
       channel.ack(msg!);
     });
   } catch (error) {
