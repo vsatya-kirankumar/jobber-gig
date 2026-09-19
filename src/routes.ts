@@ -1,7 +1,7 @@
 import { Application } from 'express';
-import { healthRoutes } from 'src/routes/health.routes';
+import { healthRoutes } from '@gigs/routes/health.routes';
 import { verifyGatewayRequest } from '@vsatya-kirankumar/jobber-shared';
-import { gigRoutes } from 'src/routes/gig.routes';
+import { gigRoutes } from '@gigs/routes/gig.routes';
 
 const GIG_BASE_PATH = '/api/v1/gig';
 

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { publishDirectMessage } from '@gigs/queues/gig.producer';
-import { gigChannel } from 'src/server';
+import { gigChannel } from '@gigs/server';
 import { StatusCodes } from 'http-status-codes';
 
 const gig = async (req: Request, res: Response): Promise<void> => {
